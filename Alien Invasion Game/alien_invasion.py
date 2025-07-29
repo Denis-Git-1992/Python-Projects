@@ -1,37 +1,34 @@
-class Car:
+import pygame
+import sys
 
-    def __init__(self, make, model, year):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.odometer_reading = 0
+class AlienInvasion:
+    """Overall class to manage game assets and behavior"""
 
-    def get_descriptive_name(self):
-        long_name = f"{self.year}, {self.make}, {self.model}"
-        return long_name.title()
+    def __init__(self):
+        """Initialize the game and create game resources"""
+        pygame.init()
+        self.clock = pygame.time.Clock()
+        self.screen = pygame.display.set_mode((1100, 800))
+        pygame.display.set_caption("Alien Invasion")
+        # Set background color
+        self.bg_color = (230, 230, 230)
 
-    def read_odometer(self):
-        print(f"This car has {self.odometer_reading } miles on it")
+    def run_game(self):
+        """Start the main loop for the game"""
+        while True:
+            # Watch for keyboard and mouse events.
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
 
-    def update_odometer(self, mileage):
-        if mileage < self.odometer_reading:
-            print("You can not roll back odometer")
-        else:
-            self.odometer_reading = mileage
+            #Redraw the screen during each pass through the loop
+            self.screen.fill(self.bg_color)
 
-    def increment_odometer(self, miles):
-        if miles > 0:
-            self.odometer_reading += miles
-        else:
-            print("Please, enter a valid number of miles")
+            # Make the most recently drawn screen visible.
+            pygame.display.flip()
+            self.clock.tick(60)
 
-my_new_car  = Car("audi", "a4", 2024)
-
-print(my_new_car.get_descriptive_name())
-my_new_car.read_odometer()
-my_new_car.update_odometer(15)
-my_new_car.read_odometer()
-my_new_car.update_odometer(14)
-my_new_car.read_odometer()
-my_new_car.increment_odometer(289)
-my_new_car.read_odometer()
+if __name__ == '__main__':
+    # Make a game instance and run the game.
+    ai = AlienInvasion()
+    ai.run_game()
